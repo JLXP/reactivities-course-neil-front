@@ -37,6 +37,17 @@ function App() {
     setEditMode(false);
   }
 
+
+  const handleSubmitForm = (activity: Activity) => {
+
+    if(activity.id){
+      setActitivies(activities.map(x => x.id === activity.id ? activity : x));
+    }
+    else{
+      setActivities([...activities,{...activity, id: activities.length.toString)}])
+    }
+  }
+
   return (
     <Box sx={{bgcolor:'#eeeeee'}}>
       <CssBaseline />
