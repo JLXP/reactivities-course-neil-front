@@ -1,14 +1,16 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 type Props = {
   activity?: Activity;
   closeForm: () => void;
-  submitForm: (activity: Activity) => void;
 };
 
-export default function ActivityForm({ activity, closeForm, submitForm }: Props) {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+export default function ActivityForm({ activity, closeForm }: Props) {
+  const { updateActivity } = useActivities();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -19,9 +21,11 @@ export default function ActivityForm({ activity, closeForm, submitForm }: Props)
       data[key] = value;
     });
 
-    if(activity) data.id = activity.id;
-
-    submitForm(data as unknown as Activity);
+    if (activity) {
+      data.id = activity.id;
+      updateActivity.mutateAsync(data as unknown as Activity);
+      closeForm();
+    }
   };
 
   return (
@@ -36,24 +40,24 @@ export default function ActivityForm({ activity, closeForm, submitForm }: Props)
         flexDirection="column"
         gap={3}
       >
-        <TextField name="title" label="Title" value={activity?.title} />
+        <TextField name="title" label="Title" defaultValue={activity?.title} />
         <TextField
           name="description"
           label="Description"
           multiline
           rows={3}
-          value={activity?.description}
+          defaultValue={activity?.description}
         />
         <TextField
           name="category"
           label="Category"
-          value={activity?.category}
+          defaultValue={activity?.category}
         />
         <TextField
           name="date"
           label="Date"
           type="date"
-          value={activity?.date}
+          defaultValue={activity?.date}
         />
         <TextField name="city" label="City" value={activity?.city} />
         <TextField name="venue" label="Venue" value={activity?.venue} />
@@ -61,7 +65,7 @@ export default function ActivityForm({ activity, closeForm, submitForm }: Props)
           <Button color="inherit" onClick={closeForm}>
             Cancel
           </Button>
-          <Button type="submit" color="success" variant="contained">
+          <Button type="submit" color="success" variant="contained" disabled={updateActivity.isPending}>
             Submit
           </Button>
         </Box>
