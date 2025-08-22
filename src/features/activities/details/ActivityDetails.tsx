@@ -35,7 +35,7 @@ export default function ActivityDetails() {
         <Button
           color="primary"
           component={Link}
-          to={`/activities/${activity.id}`}
+          to={`/manage/${activity.id}`}
         >
           Edit
         </Button>

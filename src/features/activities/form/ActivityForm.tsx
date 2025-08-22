@@ -1,12 +1,13 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
 import { useActivities } from "../../../lib/hooks/useActivities";
-
-
+import { useNavigate, useParams } from "react-router";
 
 export default function ActivityForm() {
-  const { updateActivity, createActivity } = useActivities();
-  const activity = {} as Activity;
+  const { id } = useParams();
+  const { updateActivity, createActivity, activity, isLoadingActivity } =
+    useActivities(id);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,12 +23,16 @@ export default function ActivityForm() {
     if (activity) {
       data.id = activity.id;
       updateActivity.mutateAsync(data as unknown as Activity);
-  
+      navigate(`/activities/${activity.id}`);
     } else {
-      createActivity.mutateAsync(data as unknown as Activity);
-     
+      createActivity.mutate(data as unknown as Activity, {
+        onSuccess: (id) => {
+          navigate(`activities/${id}`);
+        },
+      });
     }
   };
+  if (isLoadingActivity) return <Typography>Loading activity...</Typography>;
 
   return (
     <Paper sx={{ borderaRadius: 3, padding: 3 }}>
@@ -67,14 +72,12 @@ export default function ActivityForm() {
         <TextField name="city" label="City" value={activity?.city} />
         <TextField name="venue" label="Venue" value={activity?.venue} />
         <Box display="flex" justifyContent="end" gap={3}>
-          <Button color="inherit" >
-            Cancel
-          </Button>
+          <Button color="inherit">Cancel</Button>
           <Button
             type="submit"
             color="success"
             variant="contained"
-            disabled={updateActivity.isPending || createActivity.isPending }
+            disabled={updateActivity.isPending || createActivity.isPending}
           >
             Submit
           </Button>
