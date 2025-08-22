@@ -2,12 +2,13 @@ import { Group } from "@mui/icons-material";
 import {
   AppBar,
   Box,
-  Button,
   Container,
   MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
+import { NavLink } from "react-router";
+import MenuItemLink from "../shared/components/MenuItemLink";
 
 export default function Navbar() {
   return (
@@ -22,7 +23,7 @@ export default function Navbar() {
         <Container>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box>
-              <MenuItem>
+              <MenuItem component={NavLink} to="/">
                 <Group fontSize="large" />
                 <Typography variant="h4" fontWeight={"bold"}>
                   Reactivities
@@ -30,42 +31,10 @@ export default function Navbar() {
               </MenuItem>
             </Box>
             <Box sx={{ display: "flex" }}>
-              <MenuItem
-                sx={{
-                  fontSize: "1.2rem",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                Activities
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  fontSize: "1.2rem",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                About
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  fontSize: "1.2rem",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                Contact
-              </MenuItem>
+              <MenuItemLink to="/activities">Activities</MenuItemLink>
+              <MenuItemLink to="/createActivity">Create Activity</MenuItemLink>
             </Box>
-            <Button
-              size="large"
-              variant="contained"
-              color="warning"
-              onClick={() => {}}
-            >
-              Create Activity
-            </Button>
+            <MenuItem>UserMenu</MenuItem>
           </Toolbar>
         </Container>
       </AppBar>
