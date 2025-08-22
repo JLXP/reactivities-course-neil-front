@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useActivities } from "../../../lib/hooks/useActivities";
+import { Link } from 'react-router';
 
 type Props = {
   activity: Activity;
@@ -36,7 +37,8 @@ export default function ActivityCard({ activity }: Props) {
           <Button
             size="medium"
             variant="contained"
-            onClick={() => {}}
+            component={Link}
+            to={`/activities/${activity.id}`}
           >
             View
           </Button>
