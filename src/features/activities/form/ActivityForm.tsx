@@ -37,7 +37,7 @@ export default function ActivityForm() {
   return (
     <Paper sx={{ borderaRadius: 3, padding: 3 }}>
       <Typography variant="h5" gutterBottom color="primary">
-        Create Activity
+        {activity ? "Edit activity" : "Create activity"}
       </Typography>
       <Box
         component="form"
