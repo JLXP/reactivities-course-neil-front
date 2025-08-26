@@ -10,6 +10,7 @@ export const useActivities = (id?: string) => {
       const response = await agent.get<Activity[]>("/activities");
       return response.data;
     },
+    enabled: !id && location.pathname === "/activities",
   });
 
   const updateActivity = useMutation({
@@ -41,7 +42,7 @@ export const useActivities = (id?: string) => {
       const response = await agent.get<Activity>(`/activities/${id}`);
       return response.data;
     },
-    enabled:!!id
+    enabled: !!id,
   });
 
   const deleteActivity = useMutation({
