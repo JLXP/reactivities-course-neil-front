@@ -33,6 +33,7 @@ export default function Navbar() {
             <Box sx={{ display: "flex" }}>
               <MenuItemLink to="/activities">Activities</MenuItemLink>
               <MenuItemLink to="/createActivity">Create Activity</MenuItemLink>
+              <MenuItemLink to="/counter">Counter</MenuItemLink>
             </Box>
             <MenuItem>UserMenu</MenuItem>
           </Toolbar>
