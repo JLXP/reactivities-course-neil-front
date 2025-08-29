@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "../stores/store";
 import { toast } from "react-toastify";
+import { router } from "../../app/router/Routes";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -26,11 +27,21 @@ agent.interceptors.response.use(
   async (error) => {
     await sleep(100);
     store.uiStore.isIdle();
-    
-    const {status}= error.response;
+
+    const { status, data } = error.response;
     switch (status) {
       case 400:
-        toast.error("Bad Request - 400");
+        if(data.errors){
+          const modalStateErrors = [];
+          for(const key in data.errors){
+            if(data.errors[key]){
+              modalStateErrors.push(data.errors[key])
+            }
+          }
+          throw modalStateErrors.flat()
+        }else{
+          toast.error(data);
+        }
         break;
       case 401:
         toast.error("Unauthorized - 401");
@@ -39,7 +50,7 @@ agent.interceptors.response.use(
         toast.error("Forbidden - 403");
         break;
       case 404:
-        toast.error("Not Found - 404");
+        router.navigate("/not-found");
         break;
       case 500:
         toast.error("Server Error - 500");
