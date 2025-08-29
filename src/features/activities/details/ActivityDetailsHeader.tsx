@@ -54,7 +54,9 @@ export default function ActivityDetailsHeader({ activity }: Props) {
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             {activity.title}
           </Typography>
-          <Typography variant="subtitle1">{formatDate(activity.date)}</Typography>
+          <Typography variant="subtitle1">
+            {formatDate(activity.date)}
+          </Typography>
           <Typography variant="subtitle2">
             Hosted by{" "}
             <Link
@@ -81,7 +83,7 @@ export default function ActivityDetailsHeader({ activity }: Props) {
                 variant="contained"
                 color="primary"
                 component={Link}
-                to={`/manage/activityId`}
+                to={`/manage/${activity.id}`}
                 disabled={isCancelled}
               >
                 Manage Event
