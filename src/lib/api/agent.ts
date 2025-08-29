@@ -31,15 +31,15 @@ agent.interceptors.response.use(
     const { status, data } = error.response;
     switch (status) {
       case 400:
-        if(data.errors){
+        if (data.errors) {
           const modalStateErrors = [];
-          for(const key in data.errors){
-            if(data.errors[key]){
-              modalStateErrors.push(data.errors[key])
+          for (const key in data.errors) {
+            if (data.errors[key]) {
+              modalStateErrors.push(data.errors[key]);
             }
           }
-          throw modalStateErrors.flat()
-        }else{
+          throw modalStateErrors.flat();
+        } else {
           toast.error(data);
         }
         break;
@@ -53,7 +53,7 @@ agent.interceptors.response.use(
         router.navigate("/not-found");
         break;
       case 500:
-        toast.error("Server Error - 500");
+        router.navigate("/server-error", { state: { error: data } });
         break;
       default:
         toast.error("An unexpected error occurred");
