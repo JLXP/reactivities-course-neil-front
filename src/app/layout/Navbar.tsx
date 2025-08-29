@@ -40,6 +40,7 @@ export default function Navbar() {
               <MenuItemLink to="/activities">Activities</MenuItemLink>
               <MenuItemLink to="/createActivity">Create Activity</MenuItemLink>
               <MenuItemLink to="/counter">Counter</MenuItemLink>
+              <MenuItemLink to="/errors">Erros</MenuItemLink>
             </Box>
             <MenuItem>UserMenu</MenuItem>
           </Toolbar>
