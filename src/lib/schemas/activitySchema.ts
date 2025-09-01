@@ -6,9 +6,12 @@ export const activitySchema = z.object({
   title: requiredString("Title"),
   description: requiredString("Description"),
   category: requiredString("Category"),
-  date: requiredString("Date"),
+  date: z.coerce.date<Date>(
+    {
+      error: 'Date is required',
+    }),
   city: requiredString("City"),
   venue: requiredString("Venue"),
 });
 
-export type ActivitySchema = z.infer<typeof activitySchema>;
+export type ActivitySchema = z.input<typeof activitySchema>;

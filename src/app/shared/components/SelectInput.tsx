@@ -21,7 +21,7 @@ export default function SelectInput<T extends FieldValues>({
   control,
   defaultValue,
   rules,
-  ...textFieldProps
+  ...selectFieldProps
 }: Props<T>) {
   const { field, fieldState } = useController({
     name,
@@ -32,13 +32,13 @@ export default function SelectInput<T extends FieldValues>({
 
   return (
     <FormControl fullWidth error={!!fieldState.error}>
-      <InputLabel>{textFieldProps.label}</InputLabel>
+      <InputLabel>{selectFieldProps.label}</InputLabel>
       <Select
         value={field.value || ""}
-        label={textFieldProps.label}
+        label={selectFieldProps.label}
         onChange={field.onChange}
       >
-        {textFieldProps.items.map((item) => (
+        {selectFieldProps.items.map((item) => (
           <MenuItem key={item.value} value={item.value}>
             {item.text}
           </MenuItem>
