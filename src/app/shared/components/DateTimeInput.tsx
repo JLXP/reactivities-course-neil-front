@@ -27,7 +27,7 @@ export default function DateTimeInput<T extends FieldValues>({
       onChange={(value) => {
         field.onChange(new Date(value!));
       }}
-      sx={{ width: "100%ƒ" }}
+      sx={{ width: "100%" }}
       slotProps={{
         textField: {
           onBlur: field.onBlur,
