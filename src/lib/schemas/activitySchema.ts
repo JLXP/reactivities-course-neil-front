@@ -21,4 +21,4 @@ export const activitySchema = z.object({
   }),
 });
 
-export type ActivitySchema = z.input<typeof activitySchema>;
+export type ActivitySchema = z.infer<typeof activitySchema>;

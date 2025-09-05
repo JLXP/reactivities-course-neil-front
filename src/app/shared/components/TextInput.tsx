@@ -7,24 +7,13 @@ import {
 
 type Props<T extends FieldValues> = UseControllerProps<T> & TextFieldProps;
 
-export default function TextInput<T extends FieldValues>({
-  name,
-  control,
-  defaultValue,
-  rules,
-  ...textFieldProps
-}: Props<T>) {
-  const { field, fieldState } = useController({
-    name,
-    control,
-    defaultValue,
-    rules,
-  });
+export default function TextInput<T extends FieldValues>(props: Props<T>) {
+  const { field, fieldState } = useController({...props});
 
   return (
     <TextField
       {...field}
-      {...textFieldProps}
+      {...props}
       fullWidth
       value={field.value || ""}
       variant="outlined"
