@@ -32,6 +32,8 @@ export default function LoginForm() {
         p: 3,
         gap: 3,
         maxWidth: "md",
+        mx: "auto",
+        borderRadius: 3,
       }}
     >
       <Box

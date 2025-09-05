@@ -1,15 +1,23 @@
 interface Activity {
-  id: string;
+  id?: string;
   title: string;
   date: Date;
   description: string;
   category: string;
-  isCancelled: boolean;
+  isCancelled?: boolean;
   city: string;
   venue: string;
   latitude: number;
   longitude: number;
 }
+
+type User = {
+  id: string;
+  email: string;
+  displayName: string;
+  imageUrl: string;
+};
+
 export type LocationIQSuggestion = {
   place_id: string;
   osm_id: string;
@@ -32,12 +40,12 @@ export type LocationIQAddress = {
   road: string;
   suburb?: string;
   city?: string;
-  town?:string;
-  village?:string;
+  town?: string;
+  village?: string;
   county: string;
   state: string;
   postcode: string;
   country: string;
   country_code: string;
   neighbourhood?: string;
-}
+};
