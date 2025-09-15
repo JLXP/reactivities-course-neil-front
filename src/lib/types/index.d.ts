@@ -19,6 +19,8 @@ interface Activity {
 type Profile = {
   id: string;
   displayName: string;
+  bio?: string;
+  imageUrl?: string;
 };
 
 type User = {
