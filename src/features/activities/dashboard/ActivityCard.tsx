@@ -79,7 +79,10 @@ export default function ActivityCard({ activity }: Props) {
             activity.attendees.map(att=>(
               <Avatar
               key={att.id}
-              
+              alt= {att.displayName + 'image'}
+              src={att.imageUrl}
+              component={Link}
+              to={`/profiles/${att.id}`}
               />
             ))
           }
