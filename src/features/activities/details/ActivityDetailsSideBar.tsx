@@ -9,10 +9,14 @@ import {
   Chip,
   Grid,
 } from "@mui/material";
+import type { Activity } from "../../../lib/types";
 
-export default function ActivityDetailsSideBar() {
+type Props = {
+  activity: Activity;
+};
+
+export default function ActivityDetailsSideBar({ activity }: Props) {
   const following = true;
-  const isHost = true;
 
   return (
     <>
@@ -25,46 +29,55 @@ export default function ActivityDetailsSideBar() {
           p: 2,
         }}
       >
-        <Typography variant="h6">2 people going</Typography>
+        <Typography variant="h6">
+          {activity.attendees.length} people going
+        </Typography>
       </Paper>
       <Paper sx={{ padding: 2 }}>
-        <Grid container alignItems="center">
-          <Grid size={8}>
-            <List sx={{ display: "flex", flexDirection: "column" }}>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar alt={"attendee name"} src={"/assets/user.png"} />
-                </ListItemAvatar>
-                <ListItemText>
-                  <Typography variant="h6">Bob</Typography>
-                </ListItemText>
-              </ListItem>
-            </List>
+        {activity.attendees.map((attende) => (
+          <Grid container alignItems="center">
+            <Grid size={8}>
+              <List sx={{ display: "flex", flexDirection: "column" }}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar
+                      variant="rounded"
+                      alt={attende.displayName}
+                      src={attende.imageUrl}
+                      sx={{ width: 75, height: 75 }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText>
+                    <Typography variant="h6">{attende.displayName}</Typography>
+                    {following && (
+                      <Typography variant="body2" color="orange">
+                        Following
+                      </Typography>
+                    )}
+                  </ListItemText>
+                </ListItem>
+              </List>
+            </Grid>
+            <Grid
+              size={4}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                gap: 1,
+              }}
+            >
+              {activity.hostId === attende.id && (
+                <Chip
+                  label="Host"
+                  color="warning"
+                  variant="filled"
+                  sx={{ borderRadius: 2 }}
+                />
+              )}
+            </Grid>
           </Grid>
-          <Grid
-            size={4}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
-              gap: 1,
-            }}
-          >
-            {isHost && (
-              <Chip
-                label="Host"
-                color="warning"
-                variant="filled"
-                sx={{ borderRadius: 2 }}
-              />
-            )}
-            {following && (
-              <Typography variant="body2" color="orange">
-                Following
-              </Typography>
-            )}
-          </Grid>
-        </Grid>
+        ))}
       </Paper>
     </>
   );

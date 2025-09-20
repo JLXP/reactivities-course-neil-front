@@ -1,7 +1,4 @@
-import {
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { useActivities } from "../../../lib/hooks/useActivities";
 import ActivityDetailsHeader from "./ActivityDetailsHeader";
@@ -20,11 +17,11 @@ export default function ActivityDetails() {
     <Grid container spacing={3}>
       <Grid size={8}>
         <ActivityDetailsHeader activity={activity} />
-        <ActivityDetailsInfo  activity={activity}  />
+        <ActivityDetailsInfo activity={activity} />
         <ActivityDetailsChat />
       </Grid>
       <Grid size={4}>
-        <ActivityDetailsSideBar />
+        <ActivityDetailsSideBar activity={activity} />
       </Grid>
     </Grid>
   );
