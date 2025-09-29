@@ -1,4 +1,4 @@
-interface Activity {
+export interface Activity {
   id?: string;
   title: string;
   date: Date;
@@ -14,17 +14,22 @@ interface Activity {
   isHost: boolean;
   hostId: string;
   hostDisplayName: string;
-  hostImageUrl:string;
+  hostImageUrl: string;
 }
 
-type Profile = {
+export type Profile = {
   id: string;
   displayName: string;
   bio?: string;
   imageUrl?: string;
 };
 
-type User = {
+export type Photo = {
+  id: string;
+  url: string;
+};
+
+export type User = {
   id: string;
   email: string;
   displayName: string;
