@@ -1,7 +1,14 @@
 import { useParams } from "react-router";
 import { useProfile } from "../../lib/hooks/useProfile";
-import { Box, Button, ImageList, ImageListItem, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ImageList,
+  ImageListItem,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import PhotoUploadWidget from "../../app/shared/components/PhotoUploadWidget";
 
 export default function ProfilePhotos() {
   const { id } = useParams();
@@ -10,8 +17,8 @@ export default function ProfilePhotos() {
 
   if (loadingPhotos) return <Typography>Loading photos...</Typography>;
 
-  if (!photos || photos.length === 0)
-    return <Typography>No photos found for this user</Typography>;
+  /*if (!photos || photos.length === 0)
+    return <Typography>No photos found for this user</Typography>;*/
 
   return (
     <Box>
@@ -24,7 +31,7 @@ export default function ProfilePhotos() {
       )}
 
       {editMode ? (
-        <div>Photo widget goes here</div>
+        <PhotoUploadWidget />
       ) : (
         <ImageList sx={{ width: 500, height: 450 }} cols={6} rowHeight={164}>
           {photos.map((item) => (
