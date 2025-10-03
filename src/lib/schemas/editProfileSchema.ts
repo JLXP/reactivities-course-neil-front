@@ -3,7 +3,7 @@ import { requiredString } from "../utils/utils";
 
 export const editProfileSchema = z.object({
   displayName: requiredString("Display Name"),
-  bio: z.string().optional,
+  bio: z.string().optional(),
 });
 
 
