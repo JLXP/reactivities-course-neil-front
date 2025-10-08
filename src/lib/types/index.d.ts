@@ -36,7 +36,7 @@ export type User = {
   imageUrl: string;
 };
 
-export type Comment = {
+export type ChatComment = {
   id: string;
   createdAt: Date;
   body: string;
