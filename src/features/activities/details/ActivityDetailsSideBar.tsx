@@ -16,7 +16,6 @@ type Props = {
 };
 
 export default function ActivityDetailsSideBar({ activity }: Props) {
-  const following = true;
 
   return (
     <>
@@ -49,7 +48,7 @@ export default function ActivityDetailsSideBar({ activity }: Props) {
                   </ListItemAvatar>
                   <ListItemText>
                     <Typography variant="h6">{attende.displayName}</Typography>
-                    {following && (
+                    {attende.following && (
                       <Typography variant="body2" color="orange">
                         Following
                       </Typography>
