@@ -25,9 +25,7 @@ export const useProfile = (id?: string) => {
     enabled: !!id,
   });
 
-  const isCurrentUser = useMemo(() => {
-    return id === queryClient.getQueryData<User>(["user"])?.id;
-  }, [id, queryClient]);
+  
 
   const uploadPhoto = useMutation({
     mutationFn: async (file: Blob) => {
@@ -116,6 +114,30 @@ export const useProfile = (id?: string) => {
     },
   });
 
+  const updateFollowing = useMutation({
+    mutationFn:async ()=>{
+      await agent.post(`/profiles/${id}/follow`)
+    },
+    onSuccess:()=>{
+      queryClient.setQueryData(["profile", id],(profile:Profile)=>{
+        if(!profile || profile.followerCount === undefined) return profile;
+        return {
+          ...profile,
+          following: !profile.following,
+          followersCount: profile.following 
+          ? profile.followerCount -1
+          : profile.followerCount +1
+        }
+      })
+    }
+  })
+
+  const isCurrentUser = useMemo(() => {
+    return id === queryClient.getQueryData<User>(["user"])?.id;
+  }, [id, queryClient]);
+
+  
+
   return {
     profile,
     loadingProfile,
@@ -125,6 +147,7 @@ export const useProfile = (id?: string) => {
     uploadPhoto,
     setMainPhoto,
     deletePhoto,
-    updateProfile
+    updateProfile,
+    updateFollowing
   };
 };
