@@ -1,3 +1,8 @@
+export type PagedList<T, TCursor> = {
+  items: T[];
+  nextCursor: TCursor;
+};
+
 export interface Activity {
   id?: string;
   title: string;
@@ -14,7 +19,7 @@ export interface Activity {
   isHost: boolean;
   hostId: string;
   hostDisplayName: string;
-  hostImageUrl: string;
+  hostImageUrl?: string;
 }
 
 export type Profile = {
