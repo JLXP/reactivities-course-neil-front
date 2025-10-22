@@ -10,15 +10,22 @@ export default function ActivityDashboard() {
       <Grid size={8}>
         <ActivityList />
         <Button
-          onClick={()=> fetchNextPage()}
-          sx={{my:2, float:'right'}}
-          variant = "contained"
+          onClick={() => fetchNextPage()}
+          sx={{ my: 2, float: "right" }}
+          variant="contained"
           disabled={!hasNextPage || isFetchingNextPage}
         >
           Load more
         </Button>
       </Grid>
-      <Grid size={4}>
+      <Grid
+        size={4}
+        sx={{
+          position: "sticky",
+          top: 112,
+          alignSelf: "flex-start",
+        }}
+      >
         <ActivityFilters />
       </Grid>
     </Grid>

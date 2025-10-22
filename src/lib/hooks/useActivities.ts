@@ -14,20 +14,28 @@ export const useActivities = (id?: string) => {
   const { currentUser } = useAccount();
   const location = useLocation();
 
-  const { data: activitiesGroup, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery<
-    PagedList<Activity, string>
-  >({
+  const {
+    data: activitiesGroup,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery<PagedList<Activity, string>>({
     queryKey: ["activities"],
     queryFn: async ({ pageParam = null }) => {
-      const response = await agent.get<PagedList<Activity, string>>("/activities", {
-        params: {
-          cursor: pageParam,
-          pageSize: 3,
-        },
-      });
+      const response = await agent.get<PagedList<Activity, string>>(
+        "/activities",
+        {
+          params: {
+            cursor: pageParam,
+            pageSize: 3,
+          },
+        }
+      );
       return response.data;
     },
     enabled: !id && location.pathname === "/activities" && !!currentUser,
+    staleTime: 100 * 60 * 5,
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     select: (data) => ({
