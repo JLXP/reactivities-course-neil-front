@@ -8,8 +8,12 @@ import agent from "../api/agent";
 import type { Activity, PagedList } from "../types";
 import { useAccount } from "./useAccount";
 import { useLocation } from "react-router";
+import { useStore } from "./useStore";
 
 export const useActivities = (id?: string) => {
+  const {
+    activityStore: { filter, startDate },
+  } = useStore();
   const queryClient = useQueryClient();
   const { currentUser } = useAccount();
   const location = useLocation();
@@ -29,6 +33,8 @@ export const useActivities = (id?: string) => {
           params: {
             cursor: pageParam,
             pageSize: 3,
+            filter,
+            startDate
           },
         }
       );
