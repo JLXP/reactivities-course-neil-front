@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 import type { Photo, Profile, User } from "../types";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { EditProfileSchema } from "../schemas/editProfileSchema";
+import { type Activity } from "../types/index";
 
 export const useProfile = (id?: string, predicate?: string) => {
+  const [filter, setFilter] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { data: profile, isLoading: loadingProfile } = useQuery<Profile>({
@@ -35,7 +37,7 @@ export const useProfile = (id?: string, predicate?: string) => {
       );
       return response.data;
     },
-    enabled: !!id && !!predicate
+    enabled: !!id && !!predicate,
   });
 
   const uploadPhoto = useMutation({
@@ -131,7 +133,9 @@ export const useProfile = (id?: string, predicate?: string) => {
     },
     onSuccess: () => {
       queryClient.setQueryData(["profile", id], (profile: Profile) => {
-        queryClient.invalidateQueries({queryKey:['followings', id, 'followers']})
+        queryClient.invalidateQueries({
+          queryKey: ["followings", id, "followers"],
+        });
         if (!profile || profile.followerCount === undefined) return profile;
         return {
           ...profile,
@@ -144,6 +148,22 @@ export const useProfile = (id?: string, predicate?: string) => {
     },
   });
 
+  const { data: userActivities, isLoading: loadingUserActivities } = useQuery({
+    queryKey: ["user-activities", filter],
+    queryFn: async () => {
+      const response = await agent.get<Activity[]>(
+        `/profiles/${id}/activities`,
+        {
+          params: {
+            filter,
+          },
+        }
+      );
+      return response.data;
+    },
+    enabled: !!id && !!filter,
+  });
+
   const isCurrentUser = useMemo(() => {
     return id === queryClient.getQueryData<User>(["user"])?.id;
   }, [id, queryClient]);
@@ -152,6 +172,10 @@ export const useProfile = (id?: string, predicate?: string) => {
     profile,
     loadingProfile,
     photos,
+    userActivities,
+    loadingUserActivities,
+    setFilter,
+    filter,
     loadingPhotos,
     isCurrentUser,
     uploadPhoto,
@@ -160,6 +184,6 @@ export const useProfile = (id?: string, predicate?: string) => {
     updateProfile,
     updateFollowing,
     followings,
-    loadingFollowings
+    loadingFollowings,
   };
 };
