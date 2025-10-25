@@ -45,12 +45,12 @@ export default function ProfileHeader() {
           <Stack spacing={2}>
             <Box display="flex" justifyContent="space-around" width="100%">
               <Box textAlign="center">
-                <Typography variant="h6">Follers</Typography>
+                <Typography variant="h6">Followers</Typography>
                 <Typography variant="h3">{profile.followerCount}</Typography>
               </Box>
               <Box textAlign="center">
                 <Typography variant="h6">Following</Typography>
-                <Typography variant="h3">{profile.following}</Typography>
+                <Typography variant="h3">{profile.followingCount}</Typography>
               </Box>
             </Box>
 

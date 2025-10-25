@@ -15,7 +15,7 @@ export const useProfile = (id?: string, predicate?: string) => {
       const response = await agent.get<Profile>(`/profiles/${id}`);
       return response.data;
     },
-    enabled: !!id && !!predicate,
+    enabled: !!id && !predicate,
   });
 
   const { data: photos, isLoading: loadingPhotos } = useQuery<Photo[]>({
@@ -24,7 +24,7 @@ export const useProfile = (id?: string, predicate?: string) => {
       const response = await agent.get<Photo[]>(`/profiles/${id}/photos`);
       return response.data;
     },
-    enabled: !!id && !!predicate,
+    enabled: !!id && !predicate,
   });
 
   const { data: followings, isLoading: loadingFollowings } = useQuery<

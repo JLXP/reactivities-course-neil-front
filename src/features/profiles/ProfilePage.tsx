@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 export default function ProfilePage() {
 
   const {id} = useParams();
-  console.log(id);
+  console.log('xxx')
   const {profile, loadingProfile} = useProfile(id);
 
   if(loadingProfile) return <Typography>Loading profile...</Typography>
